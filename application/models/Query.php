@@ -17,7 +17,7 @@
 						'user_name' => $username,
 						'first_name' => $first_name,
 						'last_name' => $last_name,
-						'password' => $password,
+						'password' => md5($password.$salt),
 						'salt' => $salt,
 						'address' => $address,
 						'phone' => $phone,
