@@ -49,16 +49,24 @@ class Home extends CI_Controller{
 		$data['css'] = $this->load->view('include/css.php', NULL, TRUE);
 		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
 		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
-		$this->load->view('pages/register_user.php', $data);
-	}
 
-	public function register1(){
-		$query['data'] = $this->query->InsertData($_POST['email'], $_POST['username'], $_POST['first_name'], $_POST['last_name'], $_POST['password'], $_POST['salt'], $_POST['address'], $_POST['phone']);
-		$data['js'] = $this->load->view('include/javascript.php', NULL, TRUE);
-		$data['css'] = $this->load->view('include/css.php', NULL, TRUE);
-		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
-		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
-		redirect(base_url());
+		$this->form_validation->set_rules('email', 'required|valid_email|is_unique[user.email]|max_length[50]');
+		$this->form_validation->set_rules('username', 'required|is_unique[user.user_name]|max_length[10]|min_length[6]');
+		$this->form_validation->set_rules('first_name', 'required|max_length[10]|min_length[2]');
+		$this->form_validation->set_rules('last_name', 'required|max_length[10]|min_length[2]');
+		$this->form_validation->set_rules('password', 'required|max_length[20]|min_length[6]');
+		$this->form_validation->set_rules('salt', 'required|min_length[3]');
+		$this->form_validation->set_rules('address', 'required|min_length[3]');
+		$this->form_validation->set_rules('phone', 'required|min_length[10]|numeric');
+		
+		if($this->form_validation->run() == FALSE){
+			$this->load->view('pages/register_user.php', $data);
+			// var_dump($this->form_validation->run());
+		}
+		else{
+			$this->query->InsertData($_POST['email'], $_POST['username'], $_POST['first_name'], $_POST['last_name'], $_POST['password'], $_POST['salt'], $_POST['address'], $_POST['phone']);
+			redirect(base_url());
+		}
 	}
 
 	public function simulation(){
