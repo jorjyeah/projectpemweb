@@ -8,6 +8,7 @@ class Home extends CI_Controller{
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->library('grocery_CRUD');
 		$this->load->model('query');
 		$this->load->helper('url');
 		$this->load->helper('form');
@@ -26,8 +27,6 @@ class Home extends CI_Controller{
 		$data['email'] = $this->input->post('email', true);
 		$data['password'] = $this->input->post('password', true);
 		$query = $this->query->CheckLogin($_POST['email'], $_POST['password']);
-
-		//die(var_dump($query['user_name']));
 		
 		if($query['user_name'] != NULL){
 			$userdata = array(
@@ -38,14 +37,6 @@ class Home extends CI_Controller{
 			$this->session->set_userdata($userdata);
 			redirect(base_url());
 		}
-
-		/*$data['js'] = $this->load->view('include/javascript.php', NULL, TRUE);
-		$data['css'] = $this->load->view('include/css.php', NULL, TRUE);
-		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
-		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);*/
-		
-		/*$this->load->view('pages/home.php', $data);
-		redirect(base_url());*/
 	}
 
 	public function logout(){
@@ -67,7 +58,7 @@ class Home extends CI_Controller{
 		$data['css'] = $this->load->view('include/css.php', NULL, TRUE);
 		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
 		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
-		$this->load->view('pages/home.php', $data);
+		redirect(base_url());
 	}
 
 	public function simulation(){
@@ -113,5 +104,123 @@ class Home extends CI_Controller{
 
 	public function cart(){
 		
+	}
+
+	public function usercrud(){
+		
+		$crud = new grocery_CRUD();
+		$crud->set_table('user');
+		$crud->set_subject('User');
+		$crud->required_fields('email', 'username', 'password', 'salt');
+		$crud->unset_edit();
+		$output = $crud->render();
+		$data['crud'] = get_object_vars($output);
+
+		$data['js'] = $this->load->view('include/javacrud.php', $data, TRUE);
+		$data['css'] = $this->load->view('include/csscrud.php', $data, TRUE);
+		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
+		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
+		$this->load->view('pages/crud.php', $data);
+	}
+
+	public function programcrud(){
+		
+		$crud = new grocery_CRUD();
+		$crud->set_table('program');
+		$crud->set_subject('Program');
+		$crud->display_as('program_id', 'Program ID');
+		$crud->display_as('p_name', 'Program Name');
+		$crud->display_as('l_score', 'Low Score');
+		$crud->display_as('m_score', 'Medium Score');
+		$crud->display_as('h_score', 'High Score');
+		$crud->display_as('vh_score', 'Very High Score');
+		$crud->required_fields('program_id', 'p_name', 'l_score', 'm_score', 'h_score', 'vh_score');
+		$output = $crud->render();
+		$data['crud'] = get_object_vars($output);
+
+		$data['js'] = $this->load->view('include/javacrud.php', $data, TRUE);
+		$data['css'] = $this->load->view('include/csscrud.php', $data, TRUE);
+		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
+		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
+		$this->load->view('pages/crud.php', $data);
+	}
+
+	public function componenttypecrud(){
+		
+		$crud = new grocery_CRUD();
+		$crud->set_table('component_type');
+		$crud->set_subject('Component Type');
+		$crud->display_as('c_type_id', 'Component Type ID');
+		$crud->display_as('c_type_name', 'Component Type Name');
+		$crud->required_fields('c_type_id', 'c_type_name');
+		$output = $crud->render();
+		$data['crud'] = get_object_vars($output);
+
+		$data['js'] = $this->load->view('include/javacrud.php', $data, TRUE);
+		$data['css'] = $this->load->view('include/csscrud.php', $data, TRUE);
+		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
+		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
+		$this->load->view('pages/crud.php', $data);
+	}
+
+	public function componentcrud(){
+		
+		$crud = new grocery_CRUD();
+		$crud->set_table('component');
+		$crud->set_subject('Component');
+		$crud->display_as('component_id', 'Component ID');
+		$crud->display_as('c_type_id', 'Component Type ID');
+		$crud->display_as('c_name', 'Component Name');
+		$crud->display_as('c_powercon', 'Component Power Consumption');
+		$crud->display_as('c_price', 'Component Price');
+		$crud->display_as('c_stock', 'Component Stock');
+		$crud->display_as('c_score', 'Component Score');
+		$crud->required_fields('component_id', 'c_type_id', 'c_name', 'c_powercon', 'c_price', 'c_stock', 'c_score');
+		$output = $crud->render();
+		$data['crud'] = get_object_vars($output);
+
+		$data['js'] = $this->load->view('include/javacrud.php', $data, TRUE);
+		$data['css'] = $this->load->view('include/csscrud.php', $data, TRUE);
+		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
+		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
+		$this->load->view('pages/crud.php', $data);
+	}
+
+	public function cartcrud(){
+		
+		$crud = new grocery_CRUD();
+		$crud->set_table('cart');
+		$crud->set_subject('Cart');
+		$crud->display_as('order_id', 'Order ID');
+		$crud->display_as('component_id', 'Component ID');
+		$crud->display_as('order_qty', 'Order Quantity');
+		$crud->required_fields('order_id', 'email', 'component_id', 'order_qty', 'c_sub_price', 'c_total_price', 'order_date');
+		$output = $crud->render();
+		$data['crud'] = get_object_vars($output);
+
+		$data['js'] = $this->load->view('include/javacrud.php', $data, TRUE);
+		$data['css'] = $this->load->view('include/csscrud.php', $data, TRUE);
+		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
+		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
+		$this->load->view('pages/crud.php', $data);
+	}
+
+	public function shipmentcrud(){
+		
+		$crud = new grocery_CRUD();
+		$crud->set_table('shipment');
+		$crud->set_subject('Shipement');
+		$crud->display_as('ship_id', 'Shipment ID');
+		$crud->display_as('s_name', 'Shipment Name');
+		$crud->display_as('s_price', 'Shipment Price');
+		$crud->required_fields('ship_id', 's_name', 's_price');
+		$output = $crud->render();
+		$data['crud'] = get_object_vars($output);
+
+		$data['js'] = $this->load->view('include/javacrud.php', $data, TRUE);
+		$data['css'] = $this->load->view('include/csscrud.php', $data, TRUE);
+		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
+		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
+		$this->load->view('pages/crud.php', $data);
 	}
 }
