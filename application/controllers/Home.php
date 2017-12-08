@@ -84,13 +84,13 @@ class Home extends CI_Controller{
 		$this->load->view('pages/start_simulation.php', $data);
 	}
 
-	public function build(){
+	public function process(){
 		if($this->input->post('build') != NULL){
 			echo "wow";
 		}
 		else if($this->input->post('cart') !== NULL){
 			echo "yey";
-			/*var_dump(explode(' ', $_POST['pc'])[0]);*/
+			$data['comp'][1] = $this->query->
 			for ($i=0;$i<7;$i++){
 				$data['qty'][$i] = $_POST[$i];
 			}
