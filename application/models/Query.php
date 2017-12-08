@@ -46,7 +46,12 @@
 			}
 		}
 
-		public function InsertCart(){
+		public function InsertCart($component_id, $qty, $user){
+			var_dump($component_id);
+			var_dump($qty);
+			var_dump($user);
+			$this->db->trans_begin();
+			$this->db->trans_complete();
 
 		}
 

@@ -89,10 +89,20 @@ class Home extends CI_Controller{
 			echo "wow";
 		}
 		else if($this->input->post('cart') !== NULL){
-			echo "yey";
-			$data['comp'][1] = $this->query->
+			$data['user'] = $this->session->userdata('username');
+			$data['comp'][0] = explode(' ', $_POST['pc'])[0];
+			$data['comp'][1] = explode(' ', $_POST['mb'])[0];
+			$data['comp'][2] = explode(' ', $_POST['gc'])[0];
+			$data['comp'][3] = explode(' ', $_POST['rm'])[0];
+			$data['comp'][4] = explode(' ', $_POST['ps'])[0];
+			$data['comp'][5] = explode(' ', $_POST['ssd'])[0];
+			$data['comp'][6] = explode(' ', $_POST['hdd'])[0];
+
 			for ($i=0;$i<7;$i++){
 				$data['qty'][$i] = $_POST[$i];
+				if($data['qty'][$i] != 0){
+					$this->query->InsertCart($data['comp'][$i], $data['qty'][$i], $data['user']);
+				}
 			}
 			// var_dump($data['qty'.'0']);
 			$data['pc'] = $this->query->ShowCart(explode(' ', $_POST['pc'])[0]);
