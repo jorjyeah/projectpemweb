@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<?php 
+		echo $js;
+		echo $css;
+	?>
+	<title>Computer Simulation</title>
+</head>
+<body>
+	<?php
+		echo $header;
+		echo $footer;
+	?>
+
+    	Start Simulation
+    </a>
+
+</body>
+</html>
