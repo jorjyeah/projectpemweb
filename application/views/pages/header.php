@@ -16,7 +16,7 @@
             <li><a href="<?php echo site_url().'program' ?>"><i class="fa fa-database"></i> Program Crud</a></li>
             <li><a href="<?php echo site_url().'componenttype' ?>"><i class="fa fa-database"></i> Component Type Crud</a></li>
             <li><a href="<?php echo site_url().'component' ?>"><i class="fa fa-database"></i> Component Crud</a></li>
-            <li><a href="<?php echo site_url().'cart' ?>"><i class="fa fa-database"></i> Cart Crud</a></li>
+            <li><a href="<?php echo site_url().'cartcrud' ?>"><i class="fa fa-database"></i> Cart Crud</a></li>
             <li><a href="<?php echo site_url().'shipment' ?>"><i class="fa fa-database"></i> Shipment Crud</a></li>
             <li><a href="<?php echo site_url().'logout' ?>"><i class="fa fa-power-off"></i> Log Out</a></li>
           <?php } ?>
