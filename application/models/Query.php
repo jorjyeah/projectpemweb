@@ -61,7 +61,16 @@
 			echo "<br>";
 			var_dump($subtotal);
 			echo "<br> <br>";
+			$data = array(
+				'order_id' => $order_id,
+				'email' => $email,
+				'component_id' => $component_id,
+				'order_qty' => $qty,
+				'c_price' => $price,
+				'c_sub_price' => $subtotal
+			);
 			$this->db->trans_begin();
+			$this->db->insert('cart', $data);
 			$this->db->trans_complete();
 
 		}
