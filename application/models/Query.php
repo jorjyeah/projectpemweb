@@ -46,13 +46,59 @@
 			}
 		}
 
-		public function InsertCart($component_id, $qty, $user){
+		public function InsertCart($order_id, $component_id, $qty, $email, $user, $price, $subtotal){
+			var_dump($order_id);
+			echo "<br>";
 			var_dump($component_id);
+			echo "<br>";
 			var_dump($qty);
+			echo "<br>";
 			var_dump($user);
+			echo "<br>";
+			var_dump($email);
+			echo "<br>";
+			var_dump($price);
+			echo "<br>";
+			var_dump($subtotal);
+			echo "<br> <br>";
 			$this->db->trans_begin();
 			$this->db->trans_complete();
 
+		}
+
+		public function UserDetail($user){
+			$this->db->trans_begin();
+			$this->db->select('email');
+			$this->db->from('user');
+			$this->db->where('user_name', $user);
+			$data=$this->db->get();
+			$this->db->trans_complete();
+			if($this->db->trans_status() === FALSE)
+			{
+				$this->db->trans_rollback();
+				return FALSE;
+			}else
+			{
+				return $data->row_array()['email'];
+			}
+		}
+
+		public function ShowPrice($component_id){
+			$this->db->trans_begin();
+			$this->db->select('c_price');
+			$this->db->from('component');
+			$this->db->where('component_id', $component_id);
+			$data=$this->db->get();
+			$this->db->trans_complete();
+
+			if($this->db->trans_status() === FALSE)
+			{
+				$this->db->trans_rollback();
+				return FALSE;
+			}else
+			{
+				return $data->row_array()['c_price'];
+			}
 		}
 
 		public function ShowCart($component_id){

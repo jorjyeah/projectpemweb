@@ -12,6 +12,7 @@ class Home extends CI_Controller{
 		$this->load->model('query');
 		$this->load->helper('url');
 		$this->load->helper('form');
+		$this->load->helper('string');
 	}
 
 	public function index(){
@@ -89,6 +90,7 @@ class Home extends CI_Controller{
 		}
 		else if($this->input->post('cart') !== NULL){
 			$data['user'] = $this->session->userdata('username');
+			$data['orderid'] = date("ymd").random_string('numeric',4);
 			$data['comp'][0] = explode(' ', $_POST['pc'])[0];
 			$data['comp'][1] = explode(' ', $_POST['mb'])[0];
 			$data['comp'][2] = explode(' ', $_POST['gc'])[0];
@@ -99,8 +101,10 @@ class Home extends CI_Controller{
 
 			for ($i=0;$i<7;$i++){
 				$data['qty'][$i] = $_POST[$i];
+				$data['prc'][$i] = $this->query->ShowPrice($data['comp'][$i]);
+				$data['email'] = $this->query->UserDetail($data['user']);
 				if($data['qty'][$i] != 0){
-					$this->query->InsertCart($data['comp'][$i], $data['qty'][$i], $data['user']);
+					$this->query->InsertCart($data['orderid'], $data['comp'][$i], $data['qty'][$i], $data['email'], $data['user'], $data['prc'][$i], $data['prc'][$i]*$data['qty'][$i]);
 				}
 			}
 			// var_dump($data['qty'.'0']);
