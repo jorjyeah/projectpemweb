@@ -11,17 +11,8 @@
 	<?php
 		echo $header;
 		echo $footer;
-		$com = array (
-			'pc' => $pc,
-			'mb' => $mb,
-			'rm' => $rm,
-			'gc' => $gc,
-			'ps' => $ps,
-			'ssd' => $ssd,
-			'hdd' => $hdd
-		);
 	?>
-
+	<?php echo form_open(base_url()."process"); ?>
 	<div class="container">
 	<table id="cart" class="table table-striped">
 		<thead>
@@ -33,20 +24,21 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php $i=0; foreach($com as $type => $details){
-				if($qty[$i] != 0){
-					echo "<tr>";
-						echo "<td>".$details[0]['component_id']." - ".$details[0]['c_name']."</td>";
-						echo "<td>".$qty[$i]."</td>";
-						echo "<td>".$qty[$i]*$details[0]['c_price']."</td>";
-						echo "<td>
-						<button class='btn btn-warning'>
-							<i class='fa fa-trash' aria-hidden='true'></i> Remove
-						</button> </td>";
-					echo "</tr>";
-				}
-			$i++;
-			}?>
+				<?php for($i=0;$i<7;$i++){
+					if($qty[$i] != 0){
+						echo "<tr>";
+							echo "<td>".$id[$i]." - ".$name[$i]."</td>";
+							echo "<td>".$qty[$i]."</td>";
+							echo "<td>".$prc[$i]*$qty[$i]."</td>";
+							echo "<td>
+							<button type='submit' name='deletecart' value=".$qty[$i]." class='btn btn-warning'>
+								<i class='fa fa-times'></i> Remove
+							</button>
+							</td>"; // button remove untuk menghapus barang yang dipesan, dengan cara membuka routes deletecart, dan mengirimkan value(index) dari komponen yang akan dihapus
+							var_dump($i);
+						echo "</tr>";
+					}
+				}?>
 		</tbody>
 		<tfoot>
 			<tr>
@@ -58,6 +50,7 @@
 		</tfoot>
 	</table>
 	</div>
+	<?php echo form_close(); ?>
 	<script>
 		$(document).ready(function(){
 		    $('#cart').DataTable();
@@ -66,6 +59,10 @@
 		$(document).ready(function() {
 		    var table = $('#example').DataTable();
 		} );
+
+		function deletecom(){
+			location.reload();
+		}
 	</script>
 </body>
 </html>

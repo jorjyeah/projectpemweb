@@ -85,8 +85,15 @@
 		</div>
 		<?php $do++; } ?>
 		<div align='right'>
-			<?php echo form_submit('build','BUILD', 'class="btn btn-warning"'); ?>
-	    	<input type="submit" name="cart" value="Add to cart"  class="btn btn-warning" class="fa fa-shopping-cart" />
+							
+			<button type='submit' name='build' class='btn btn-warning' >
+				<i class='fa fa-wrench'></i> Build
+			</button>
+
+	    	<button type="submit" name="cart" class="btn btn-warning">
+				<i class='fa fa-shopping-cart'></i> Add to Cart
+			</button>
+			
 	    </div>
 	    <?php echo form_close(); ?>
     </div>

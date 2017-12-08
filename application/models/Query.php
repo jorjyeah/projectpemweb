@@ -110,9 +110,9 @@
 			}
 		}
 
-		public function ShowCart($component_id){
+		public function ShowName($component_id){
 			$this->db->trans_begin();
-			$this->db->select('*');
+			$this->db->select('c_name');
 			$this->db->from('component');
 			$this->db->where('component_id', $component_id);
 			$data=$this->db->get();
@@ -124,7 +124,7 @@
 				return FALSE;
 			}else
 			{
-				return $data->result_array();
+				return $data->row_array()['c_name'];
 			}
 		}
 
