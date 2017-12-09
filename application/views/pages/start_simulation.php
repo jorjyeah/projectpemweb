@@ -89,10 +89,16 @@
 			<button type='submit' name='build' class='btn btn-warning' >
 				<i class='fa fa-wrench'></i> Build
 			</button>
-
-	    	<button type="submit" name="cart" class="btn btn-warning">
-				<i class='fa fa-shopping-cart'></i> Add to Cart
-			</button>
+			<?php if($this->session->userdata('username') == NULL){ ?>
+				<button type="button" class="btn btn-warning" a href="#" data-toggle='modal' data-target='#myModal'><i class='fa fa-shopping-cart'></i> Add to Cart
+				</button>
+				
+			<?php } ?>
+			<?php if($this->session->userdata('username') != NULL){ ?>
+	    		<button type="submit" name="cart" class="btn btn-warning">
+					<i class='fa fa-shopping-cart'></i> Add to Cart
+				</button>
+			<?php } ?>
 			
 	    </div>
 	    <?php echo form_close(); ?>
