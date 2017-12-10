@@ -106,8 +106,8 @@ class Home extends CI_Controller{
 		$data['email'] = $this->query->UserDetail($data['user']);
 		$this->session->set_userdata('name0', explode(' ', $_POST['pc'])[0]);
 		$this->session->set_userdata('name1', explode(' ', $_POST['mb'])[0]);
-		$this->session->set_userdata('name2', explode(' ', $_POST['gc'])[0]);
-		$this->session->set_userdata('name3', explode(' ', $_POST['rm'])[0]);
+		$this->session->set_userdata('name2', explode(' ', $_POST['rm'])[0]);
+		$this->session->set_userdata('name3', explode(' ', $_POST['gc'])[0]);
 		$this->session->set_userdata('name4', explode(' ', $_POST['ps'])[0]);
 		$this->session->set_userdata('name5', explode(' ', $_POST['ssd'])[0]);
 		$this->session->set_userdata('name6', explode(' ', $_POST['hdd'])[0]);
@@ -127,32 +127,32 @@ class Home extends CI_Controller{
 	}
 
 	public function deletecom(){
-		echo "delete";
-		$index = $this->input->$_POST['i'];
-		var_dump($index);
+		$index = $_POST['deletecom'];
+		$this->session->set_userdata('qty'.$index, 0);
 		$data['user'] = $this->session->userdata('username');
 		$data['orderid'] = date("ymd").random_string('numeric',4);
 		$data['email'] = $this->query->UserDetail($data['user']);
-		$data['id'][0] = explode(' ', $_POST['pc'])[0];
-		$data['id'][1] = explode(' ', $_POST['mb'])[0];
-		$data['id'][2] = explode(' ', $_POST['gc'])[0];
-		$data['id'][3] = explode(' ', $_POST['rm'])[0];
-		$data['id'][4] = explode(' ', $_POST['ps'])[0];
-		$data['id'][5] = explode(' ', $_POST['ssd'])[0];
-		$data['id'][6] = explode(' ', $_POST['hdd'])[0];
 		$data['js'] = $this->load->view('include/javascript.php', NULL, TRUE);
 		$data['css'] = $this->load->view('include/css.php', NULL, TRUE);
 		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
 		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
 		for ($i=0;$i<7;$i++){
-			$data['qty'][$i] = $_POST[$i];
-			$data['name'][$i] = $this->query->ShowName($data['id'][$i]);
-			$data['prc'][$i] = $this->query->ShowPrice($data['id'][$i]);
+			$data['name'][$i] = $this->query->ShowName($this->session->userdata('name'.$i));
+			$data['prc'][$i] = $this->query->ShowPrice($this->session->userdata('name'.$i));
 		}
-		$data['qty'][$index] = 0;
-		redirect(base_url().'cart'); /* gue mau redirect lagi ke halaman cart, caranya pakai routes 'process', itu nanti bakal masuk ke function process.
+		
+		$this->load->view('pages/cart.php', $data); /* gue mau redirect lagi ke halaman cart, caranya pakai routes 'process', itu nanti bakal masuk ke function process.
 		Tapi dikasih name biar bisa bedain if-ifnya yang mau mengarah ke view*/
 
+	}
+
+
+	public function build(){
+		$data['js'] = $this->load->view('include/javascript.php', NULL, TRUE);
+		$data['css'] = $this->load->view('include/css.php', NULL, TRUE);
+		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
+		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
+		$this->load->view('pages/build.php', $data);
 	}
 
 	public function usercrud(){
