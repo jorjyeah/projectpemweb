@@ -1,32 +1,33 @@
+
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-    <a class="navbar-brand" href="<?php echo site_url().'awal' ?>">Pc Architect</a>
+    <a class="navbar-brand" href="<?php echo site_url().'awal' ?>"><font color="black">Pc Architect</font></a>
     </div>
     <ul class="nav navbar-nav">
-    <li class="active"><a href="<?php echo site_url().'awal' ?>"><i class="fa fa-home"></i> Home</a></li>
+    <li><a href="<?php echo site_url().'awal' ?>"><font color="black"><i class="fa fa-home"></i> Home</font></a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
     <?php
         if($this->session->userdata('username') != NULL){ ?>
           
           <?php if($this->session->userdata('username') == '1050ti' or $this->session->userdata('username') == 'admin_m'){ ?>
-            <li><a href="#"><i class="fa fa-user-circle"></i> Welcome, <?php echo $this->session->userdata('username'); ?></a></li>
-            <li><a href="<?php echo site_url().'user' ?>"><i class="fa fa-database"></i> User Crud</a></li>
-            <li><a href="<?php echo site_url().'program' ?>"><i class="fa fa-database"></i> Program Crud</a></li>
-            <li><a href="<?php echo site_url().'componenttype' ?>"><i class="fa fa-database"></i> Component Type Crud</a></li>
-            <li><a href="<?php echo site_url().'component' ?>"><i class="fa fa-database"></i> Component Crud</a></li>
-            <li><a href="<?php echo site_url().'cartcrud' ?>"><i class="fa fa-database"></i> Cart Crud</a></li>
-            <li><a href="<?php echo site_url().'shipment' ?>"><i class="fa fa-database"></i> Shipment Crud</a></li>
-            <li><a href="<?php echo site_url().'logout' ?>"><i class="fa fa-power-off"></i> Log Out</a></li>
+            <li><a href="#"><font color="black"><i class="fa fa-user-circle"></i> Welcome, <?php echo $this->session->userdata('username'); ?></font></a></li>
+            <li><a href="<?php echo site_url().'user' ?>"><font color="black"><i class="fa fa-database"></i> User Crud</font></a></li>
+            <li><a href="<?php echo site_url().'program' ?>"><font color="black"><i class="fa fa-database"></i> Program Crud</font></a></li>
+            <li><a href="<?php echo site_url().'componenttype' ?>"><font color="black"><i class="fa fa-database"></i> Component Type Crud</font></a></li>
+            <li><a href="<?php echo site_url().'component' ?>"><font color="black"><i class="fa fa-database"></i> Component Crud</font></a></li>
+            <li><a href="<?php echo site_url().'cartcrud' ?>"><font color="black"><i class="fa fa-database"></i> Cart Crud</font></a></li>
+            <li><a href="<?php echo site_url().'shipment' ?>"><font color="black"><i class="fa fa-database"></i> Shipment Crud</font></a></li>
+            <li><a href="<?php echo site_url().'logout' ?>"><font color="black"><i class="fa fa-power-off"></i> Log Out</font></a></li>
           <?php } ?>
           <?php if($this->session->userdata('username') != 'admin_m'){ ?>
-            <li><a href="<?php echo site_url().'simulation' ?>"><i class="fa fa-play"></i> Simulation</a></li>
-            <li><a href="<?php echo site_url().'logout' ?>"><i class="fa fa-power-off"></i> Log Out</a></li>
+            <li><a href="<?php echo site_url().'simulation' ?>"><font color="black"><i class="fa fa-play"></i> Simulation</font></a></li>
+            <li><a href="<?php echo site_url().'logout' ?>"><font color="black"><i class="fa fa-power-off"></i> Log Out</font></a></li>
           <?php } ?>
         <?php } ?>
         <?php if($this->session->userdata('username') == NULL){ ?>
-            <li><a href="#" data-toggle='modal' data-target='#myModal'><i class="fa fa-power-off"></i> Log in</a></li>
+            <li><a href="#" data-toggle='modal' data-target='#myModal'><font color="black"><i class="fa fa-power-off"></i> Log in</font></a></li>
         <?php } ?>
 
     </ul>
@@ -62,3 +63,12 @@
       </div>
    </div>
 </div>
+
+<style>
+
+.navbar-inverse {
+    background-color: #f9c945;
+    border: #f9c945;
+}
+
+</style>
