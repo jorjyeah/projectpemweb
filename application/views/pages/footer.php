@@ -1,5 +1,5 @@
 <div class="text-center footer">
-	<p>Copyright 2017 - Computer Simulation</p>
+<font color="black"><p>Copyright 2017 - PC Architect</p></font>
 </div>
 
 <style>
@@ -8,7 +8,7 @@
 	left: 0;
 	bottom: 0;
 	width: 100%;
-	background-color: grey;
+	background-color: #f9c945;
 	color: #EEEEEE;
 	text-align: center;
 }
