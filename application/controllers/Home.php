@@ -84,44 +84,59 @@ class Home extends CI_Controller{
 		$this->load->view('pages/start_simulation.php', $data);
 	}
 
-	public function process(){
-		if($this->input->post('build') != NULL){
-			echo "build";
-		}
-		else if($this->input->post('cart') !== NULL){
-			$data['user'] = $this->session->userdata('username');
-			$data['orderid'] = date("ymd").random_string('numeric',4);
-			$data['email'] = $this->query->UserDetail($data['user']);
-			$data['id'][0] = explode(' ', $_POST['pc'])[0];
-			$data['id'][1] = explode(' ', $_POST['mb'])[0];
-			$data['id'][2] = explode(' ', $_POST['gc'])[0];
-			$data['id'][3] = explode(' ', $_POST['rm'])[0];
-			$data['id'][4] = explode(' ', $_POST['ps'])[0];
-			$data['id'][5] = explode(' ', $_POST['ssd'])[0];
-			$data['id'][6] = explode(' ', $_POST['hdd'])[0];
-			$data['js'] = $this->load->view('include/javascript.php', NULL, TRUE);
-			$data['css'] = $this->load->view('include/css.php', NULL, TRUE);
-			$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
-			$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
+	public function cart(){
+		$data['user'] = $this->session->userdata('username');
+		$data['orderid'] = date("ymd").random_string('numeric',4);
+		$data['email'] = $this->query->UserDetail($data['user']);
+		$data['id'][0] = explode(' ', $_POST['pc'])[0];
+		$data['id'][1] = explode(' ', $_POST['mb'])[0];
+		$data['id'][2] = explode(' ', $_POST['gc'])[0];
+		$data['id'][3] = explode(' ', $_POST['rm'])[0];
+		$data['id'][4] = explode(' ', $_POST['ps'])[0];
+		$data['id'][5] = explode(' ', $_POST['ssd'])[0];
+		$data['id'][6] = explode(' ', $_POST['hdd'])[0];
+		$data['js'] = $this->load->view('include/javascript.php', NULL, TRUE);
+		$data['css'] = $this->load->view('include/css.php', NULL, TRUE);
+		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
+		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
 
-			for ($i=0;$i<7;$i++){
-				$data['qty'][$i] = $_POST[$i];
-				$data['name'][$i] = $this->query->ShowName($data['id'][$i]);
-				$data['prc'][$i] = $this->query->ShowPrice($data['id'][$i]);
-			}
-
-			$this->load->view('pages/cart.php', $data);
-			//$this->query->InsertCart($data['orderid'], $data['comp'][$i], $data['qty'][$i], $data['email'], $data['user'], $data['prc'][$i], $data['prc'][$i]*$data['qty'][$i]);
+		for ($i=0;$i<7;$i++){
+			$data['qty'][$i] = $_POST[$i];
+			$data['name'][$i] = $this->query->ShowName($data['id'][$i]);
+			$data['prc'][$i] = $this->query->ShowPrice($data['id'][$i]);
 		}
 
-		if($this->input->post('deletecart') != NULL){
-			echo "delete";
-			$index = $this->input->post('deletecart');
-			var_dump($index);
-			$data['qty'][$index] = 0;
-			redirect(base_url().'process'); /* gue mau redirect lagi ke halaman cart, caranya pakai routes 'process', itu nanti bakal masuk ke function process.
-			Tapi dikasih name biar bisa bedain if-ifnya yang mau mengarah ke view*/
+		$this->load->view('pages/cart.php', $data);
+		//$this->query->InsertCart($data['orderid'], $data['comp'][$i], $data['qty'][$i], $data['email'], $data['user'], $data['prc'][$i], $data['prc'][$i]*$data['qty'][$i]);
+	}
+
+	public function deletecom(){
+		echo "delete";
+		$index = $this->input->$_POST['i'];
+		var_dump($index);
+		$data['user'] = $this->session->userdata('username');
+		$data['orderid'] = date("ymd").random_string('numeric',4);
+		$data['email'] = $this->query->UserDetail($data['user']);
+		$data['id'][0] = explode(' ', $_POST['pc'])[0];
+		$data['id'][1] = explode(' ', $_POST['mb'])[0];
+		$data['id'][2] = explode(' ', $_POST['gc'])[0];
+		$data['id'][3] = explode(' ', $_POST['rm'])[0];
+		$data['id'][4] = explode(' ', $_POST['ps'])[0];
+		$data['id'][5] = explode(' ', $_POST['ssd'])[0];
+		$data['id'][6] = explode(' ', $_POST['hdd'])[0];
+		$data['js'] = $this->load->view('include/javascript.php', NULL, TRUE);
+		$data['css'] = $this->load->view('include/css.php', NULL, TRUE);
+		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
+		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
+		for ($i=0;$i<7;$i++){
+			$data['qty'][$i] = $_POST[$i];
+			$data['name'][$i] = $this->query->ShowName($data['id'][$i]);
+			$data['prc'][$i] = $this->query->ShowPrice($data['id'][$i]);
 		}
+		$data['qty'][$index] = 0;
+		redirect(base_url().'cart'); /* gue mau redirect lagi ke halaman cart, caranya pakai routes 'process', itu nanti bakal masuk ke function process.
+		Tapi dikasih name biar bisa bedain if-ifnya yang mau mengarah ke view*/
+
 	}
 
 	public function usercrud(){

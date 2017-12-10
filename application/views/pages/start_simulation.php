@@ -9,7 +9,7 @@
 </head>
 <body>
 	<?php echo $header; ?>
-	<?php echo form_open(base_url()."home/process"); ?>
+	<?php echo form_open(base_url()."cart"); ?>
 	<?php 
 		$com = array (
 			'pc' => $pc,

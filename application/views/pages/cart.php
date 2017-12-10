@@ -12,7 +12,7 @@
 		echo $header;
 		echo $footer;
 	?>
-	<?php echo form_open(base_url()."process"); ?>
+	<?php echo form_open(base_url()."deletecom"); ?>
 	<div class="container">
 	<table id="cart" class="table table-striped">
 		<thead>
@@ -31,7 +31,7 @@
 							echo "<td>".$qty[$i]."</td>";
 							echo "<td>".$prc[$i]*$qty[$i]."</td>";
 							echo "<td>
-							<button type='submit' name='deletecart' value=".$qty[$i]." class='btn btn-warning'>
+							<button type='submit' name='deletecart' value=".$i." class='btn btn-warning'>
 								<i class='fa fa-times'></i> Remove
 							</button>
 							</td>"; // button remove untuk menghapus barang yang dipesan, dengan cara membuka routes deletecart, dan mengirimkan value(index) dari komponen yang akan dihapus
