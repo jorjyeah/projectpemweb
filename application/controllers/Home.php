@@ -28,10 +28,26 @@ class Home extends CI_Controller{
 		$data['email'] = $this->input->post('email', true);
 		$data['password'] = $this->input->post('password', true);
 		$query = $this->query->CheckLogin($_POST['email'], $_POST['password']);
-		
+
 		if($query['user_name'] != NULL){
 			$userdata = array(
-					'username' => $query['user_name']
+					'username' => $query['user_name'],
+					'name0' => null,
+					'qty0' => null,
+					'name1' => null,
+					'qty1' => null,
+					'name2' => null,
+					'qty2' => null,
+					'name3' => null,
+					'qty3' => null,
+					'name4' => null,
+					'qty4' => null,
+					'name5' => null,
+					'qty5' => null,
+					'name6' => null,
+					'qty6' => null,
+					'name7' => null,
+					'qty7' => null,
 				);
 
 
@@ -88,22 +104,22 @@ class Home extends CI_Controller{
 		$data['user'] = $this->session->userdata('username');
 		$data['orderid'] = date("ymd").random_string('numeric',4);
 		$data['email'] = $this->query->UserDetail($data['user']);
-		$data['id'][0] = explode(' ', $_POST['pc'])[0];
-		$data['id'][1] = explode(' ', $_POST['mb'])[0];
-		$data['id'][2] = explode(' ', $_POST['gc'])[0];
-		$data['id'][3] = explode(' ', $_POST['rm'])[0];
-		$data['id'][4] = explode(' ', $_POST['ps'])[0];
-		$data['id'][5] = explode(' ', $_POST['ssd'])[0];
-		$data['id'][6] = explode(' ', $_POST['hdd'])[0];
+		$this->session->set_userdata('name0', explode(' ', $_POST['pc'])[0]);
+		$this->session->set_userdata('name1', explode(' ', $_POST['mb'])[0]);
+		$this->session->set_userdata('name2', explode(' ', $_POST['gc'])[0]);
+		$this->session->set_userdata('name3', explode(' ', $_POST['rm'])[0]);
+		$this->session->set_userdata('name4', explode(' ', $_POST['ps'])[0]);
+		$this->session->set_userdata('name5', explode(' ', $_POST['ssd'])[0]);
+		$this->session->set_userdata('name6', explode(' ', $_POST['hdd'])[0]);
 		$data['js'] = $this->load->view('include/javascript.php', NULL, TRUE);
 		$data['css'] = $this->load->view('include/css.php', NULL, TRUE);
 		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
 		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
 
 		for ($i=0;$i<7;$i++){
-			$data['qty'][$i] = $_POST[$i];
-			$data['name'][$i] = $this->query->ShowName($data['id'][$i]);
-			$data['prc'][$i] = $this->query->ShowPrice($data['id'][$i]);
+			$this->session->set_userdata('qty'.$i, $_POST[$i]);
+			$data['name'][$i] = $this->query->ShowName($this->session->userdata('name'.$i));
+			$data['prc'][$i] = $this->query->ShowPrice($this->session->userdata('name'.$i));
 		}
 
 		$this->load->view('pages/cart.php', $data);

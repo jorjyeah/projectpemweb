@@ -24,18 +24,18 @@
 			</tr>
 		</thead>
 		<tbody>
-				<?php for($i=0;$i<7;$i++){
-					if($qty[$i] != 0){
+				
+				<?php echo $this->session->userdata('name0'); for($i=0;$i<7;$i++){
+					if($this->session->userdata('qty'.$i) != 0){
 						echo "<tr>";
-							echo "<td>".$id[$i]." - ".$name[$i]."</td>";
-							echo "<td>".$qty[$i]."</td>";
-							echo "<td>".$prc[$i]*$qty[$i]."</td>";
+							echo "<td>".$this->session->userdata('name'.$i)." - ".$name[$i]."</td>";
+							echo "<td>".$this->session->userdata('qty'.$i)."</td>";
+							echo "<td>".$prc[$i]*$this->session->userdata('qty'.$i)."</td>";
 							echo "<td>
 							<button type='submit' name='deletecart' value=".$i." class='btn btn-warning'>
 								<i class='fa fa-times'></i> Remove
 							</button>
 							</td>"; // button remove untuk menghapus barang yang dipesan, dengan cara membuka routes deletecart, dan mengirimkan value(index) dari komponen yang akan dihapus
-							var_dump($i);
 						echo "</tr>";
 					}
 				}?>
