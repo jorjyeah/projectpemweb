@@ -190,12 +190,12 @@
 					return $hasil->row_array();
 				}				
 				else{
-					echo "gagal";
+					redirect(base_url());
 				}
 			}
 			else
 			{
-				echo "kurang email";
+				redirect(base_url());
 			}
 		}
 	}

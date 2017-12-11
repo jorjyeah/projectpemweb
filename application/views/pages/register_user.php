@@ -9,10 +9,10 @@
 </head>
 <body>
 	<?php echo $header;?>
-	 <?php echo form_open('home/register'); ?>
+	 <?php echo form_open(base_url().'register'); ?>
         <div class="col-sm-6">
           Email : <input type="text" name="email" value="" size="50" class="form-control"/> <br />
-          <?php echo form_error('email', '<p class="text-danger">', '</p>'); ?>
+          <?php echo form_error('email', '<p class="bg-danger">', '</p>'); ?>
           Username : Must be at least 4 characters <input type="text" name="username" value="" size="50" class="form-control"/> <br />
           <?php echo form_error('username', '<p class="bg-danger">', '</p>'); ?>
           First Name : Must be at least 2 characters <input type="text" name="first_name" value="" size="50" class="form-control"/> <br />
