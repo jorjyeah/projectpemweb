@@ -48,19 +48,18 @@
 		}
 
 		public function InsertTransaction($orderid, $shipid, $date, $total){
-			$datadetail = array (
+			$datakey = array (
 				'order_id' => $orderid,
 				'ship_id' => $shipid,
 				't_date' => $date,
 				'total_price' => $total
 			);
 			$this->db->trans_begin();
-			$this->db->insert('cart', $datadetail);
 			$this->db->insert('transaction',$datakey);
 			$this->db->trans_complete();
 		}
 
-		public function InsertCart($orderid, $componetid, $qty, $price, $subprice){
+		public function InsertCart($orderid, $username, $componetid, $qty, $price, $subprice){
 			$datadetail = array (
 				'order_id' => $orderid,
 				'user_name' => $username,
@@ -71,7 +70,6 @@
 			);
 			$this->db->trans_begin();
 			$this->db->insert('cart', $datadetail);
-			$this->db->insert('transaction',$datakey);
 			$this->db->trans_complete();
 		}
 
