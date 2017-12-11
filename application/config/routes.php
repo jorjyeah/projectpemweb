@@ -62,6 +62,7 @@ $route['cartcrud'] = 'home/cartcrud';
 $route['shipment'] = 'home/shipmentcrud';
 $route['cart'] = 'home/cart';
 $route['build'] = 'home/cart';
+$route['transaction'] = 'home/transaction';
 $route['deletecom'] = 'home/deletecom';
 $route['default_controller'] = 'home';
 $route['404_override'] = '';

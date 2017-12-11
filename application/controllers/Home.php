@@ -13,6 +13,7 @@ class Home extends CI_Controller{
 		$this->load->helper('url');
 		$this->load->helper('form');
 		$this->load->helper('string');
+		$this->load->library('cart');
 	}
 
 	public function index(){
@@ -32,6 +33,7 @@ class Home extends CI_Controller{
 		if($query['user_name'] != NULL){
 			$userdata = array(
 					'username' => $query['user_name'],
+					'shipname' => null,
 					'name0' => null,
 					'qty0' => null,
 					'name1' => null,
@@ -72,6 +74,7 @@ class Home extends CI_Controller{
 		$this->form_validation->set_rules('first_name', 'First Name', 'required|max_length[20]|min_length[2]');
 		$this->form_validation->set_rules('last_name', 'Last Name', 'required|max_length[20]|min_length[2]');
 		$this->form_validation->set_rules('password', 'Password', 'required|max_length[20]|min_length[6]');
+		$this->form_validation->set_rules('salt', 'Salt', 'required|min_length[3]');
 		$this->form_validation->set_rules('address', 'Address', 'required|min_length[4]');
 		$this->form_validation->set_rules('phone', 'Phone Number', 'required|min_length[10]|numeric');
 		
@@ -79,7 +82,7 @@ class Home extends CI_Controller{
 			$this->load->view('pages/register_user.php', $data);
 		}
 		else{
-			$this->query->InsertData($_POST['email'], $_POST['username'], $_POST['first_name'], $_POST['last_name'], $_POST['password'], $_POST['address'], $_POST['phone']);
+			$this->query->InsertData($_POST['email'], $_POST['username'], $_POST['first_name'], $_POST['last_name'], $_POST['password'], $_POST['salt'], $_POST['address'], $_POST['phone']);
 			redirect(base_url());
 		}
 	}
@@ -101,8 +104,8 @@ class Home extends CI_Controller{
 
 	public function cart(){
 		if($this->input->post('build') == 'build'){
-			$data['user'] = $this->session->userdata('username');
-			$data['email'] = $this->query->UserDetail($data['user']);
+			// $data['user'] = $this->session->userdata('username');
+			// $data['email'] = $this->query->UserDetail($data['user']);
 			$data['id'][0] = explode(' ', $_POST['pc'])[0];
 			$data['id'][1] = explode(' ', $_POST['mb'])[0];
 			$data['id'][2] = explode(' ', $_POST['rm'])[0];
@@ -123,9 +126,8 @@ class Home extends CI_Controller{
 			$this->load->view('pages/build.php', $data);
 		}
 		else{
-			$data['user'] = $this->session->userdata('username');
-			$data['orderid'] = date("ymd").random_string('numeric',4);
-			$data['email'] = $this->query->UserDetail($data['user']);
+			// $data['user'] = $this->session->userdata('username');
+			// $data['email'] = $this->query->UserDetail($data['user']);
 			$this->session->set_userdata('name0', explode(' ', $_POST['pc'])[0]);
 			$this->session->set_userdata('name1', explode(' ', $_POST['mb'])[0]);
 			$this->session->set_userdata('name2', explode(' ', $_POST['rm'])[0]);
@@ -152,9 +154,6 @@ class Home extends CI_Controller{
 	public function deletecom(){
 		$index = $_POST['deletecom'];
 		$this->session->set_userdata('qty'.$index, 0);
-		$data['user'] = $this->session->userdata('username');
-		$data['orderid'] = date("ymd").random_string('numeric',4);
-		$data['email'] = $this->query->UserDetail($data['user']);
 		$data['js'] = $this->load->view('include/javascript.php', NULL, TRUE);
 		$data['css'] = $this->load->view('include/css.php', NULL, TRUE);
 		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
@@ -163,10 +162,40 @@ class Home extends CI_Controller{
 			$data['name'][$i] = $this->query->ShowName($this->session->userdata('name'.$i));
 			$data['prc'][$i] = $this->query->ShowPrice($this->session->userdata('name'.$i));
 		}
-		
-		$this->load->view('pages/cart.php', $data); /* gue mau redirect lagi ke halaman cart, caranya pakai routes 'process', itu nanti bakal masuk ke function process.
-		Tapi dikasih name biar bisa bedain if-ifnya yang mau mengarah ke view*/
+		$this->load->view('pages/cart.php', $data); 
 
+	}
+
+	public function transaction(){
+		$data['username']= $this->session->userdata('username');
+		$data['orderid']= date("ymd").random_string('numeric',4);
+		$data['email'] = $this->query->UserDetail($data['username']);
+		$data['shipid']= $_POST['shipment'];
+		//$this->session->set_userdata('shipname', $this->query->ShipName($data['shipid']));
+		var_dump($data['shipid']);
+		var_dump($this->session->userdata('shipname'));
+		$data['js'] = $this->load->view('include/javascript.php', NULL, TRUE);
+		$data['css'] = $this->load->view('include/css.php', NULL, TRUE);
+		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
+		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
+		$data['total'] = 0;
+		for ($i=0;$i<7;$i++){
+			$data['total']=$data['total'] +  $this->query->ShowPrice($this->session->userdata('name'.$i)*$this->session->userdata('qty'.$id));
+		}
+		$this->query->InsertTransaction($data['orderid'],$data['shipid'],date(),$data['total']);
+		
+		for ($i=0;$i<7;$i++){
+			if($this->session->userdata('qty'.$i) != 0){
+				$this->query->InsertCart($data['orderid']), 
+				$this->session->userdata('name'.$id), 
+				$this->session->userdata('qty'.$id), 
+				$this->query->ShowPrice($this->session->userdata('name'.$i)), 
+				$this->query->ShowPrice($this->session->userdata('name'.$i)*$this->session->userdata('qty'.$id));
+			}
+		}
+		redirect(base_url());
+
+		$this->load->view('pages/transaction.php',$data);
 	}
 
 	public function usercrud(){

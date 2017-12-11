@@ -47,33 +47,32 @@
 			}
 		}
 
-		public function InsertCart($order_id, $component_id, $qty, $email, $user, $price, $subtotal){
-			var_dump($order_id);
-			echo "<br>";
-			var_dump($component_id);
-			echo "<br>";
-			var_dump($qty);
-			echo "<br>";
-			var_dump($user);
-			echo "<br>";
-			var_dump($email);
-			echo "<br>";
-			var_dump($price);
-			echo "<br>";
-			var_dump($subtotal);
-			echo "<br> <br>";
-			$data = array(
-				'order_id' => $order_id,
-				'email' => $email,
-				'component_id' => $component_id,
-				'order_qty' => $qty,
-				'c_price' => $price,
-				'c_sub_price' => $subtotal
+		public function InsertTransaction($orderid, $shipid, $date, $total){
+			$datadetail = array (
+				'order_id' => $orderid,
+				'ship_id' => $shipid,
+				't_date' => $date,
+				'total_price' => $total
 			);
 			$this->db->trans_begin();
-			$this->db->insert('cart', $data);
+			$this->db->insert('cart', $datadetail);
+			$this->db->insert('transaction',$datakey);
 			$this->db->trans_complete();
+		}
 
+		public function InsertCart($orderid, $componetid, $qty, $price, $subprice){
+			$datadetail = array (
+				'order_id' => $orderid,
+				'user_name' => $username,
+				'component_id' => $componentid,
+				'order_qty' => $qty,
+				'c_price' => $price,
+				'c_sub_price' => $subprice
+			);
+			$this->db->trans_begin();
+			$this->db->insert('cart', $datadetail);
+			$this->db->insert('transaction',$datakey);
+			$this->db->trans_complete();
 		}
 
 		public function UserDetail($user){
@@ -144,6 +143,24 @@
 			}else
 			{
 				return $data->row_array()['c_name'];
+			}
+		}
+
+		public function ShipName($ship_id){
+			$this->db->trans_begin();
+			$this->db->select('*');
+			$this->db->from('shipment');
+			$this->db->where('ship_id', $ship_id);
+			$data=$this->db->get();
+			$this->db->trans_complete();
+
+			if($this->db->trans_status() === FALSE)
+			{
+				$this->db->trans_rollback();
+				return FALSE;
+			}else
+			{
+				return $data->row_array()['s_name'];
 			}
 		}
 

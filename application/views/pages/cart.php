@@ -24,7 +24,6 @@
 			</tr>
 		</thead>
 		<tbody>
-			
 				<?php for($i=0;$i<7;$i++){
 					if($this->session->userdata('qty'.$i) != 0){
 						$data = array(
@@ -44,7 +43,6 @@
 						echo "</tr>";
 					}
 				}?>
-			
 		</tbody>
 		<tfoot>
 			<tr>
@@ -57,6 +55,22 @@
 	</table>
 	</div>
 	<?php echo form_close(); ?>	
+
+
+	<?php echo form_open(base_url()."transaction"); ?>
+	<div class="container">
+		<h3> Pilih mode pengiriman / kurir </h3>
+		<input type="radio" name="shipment" value="AA001"> Autobot Assemble! (Via Darat) <br>
+		<input type="radio" name="shipment" value="MF001"> Millenium Falcon (Via Drone) <br>
+		<input type="radio" name="shipment" value="OS007"> Ocean 7 (Via Laut) <br>
+		<input type="radio" name="shipment" value="SF007"> SkyFall 007 (Via Udara) <br>
+		<button type="submit" name="checkout" class="btn btn-warning">
+			<i class='fa fa-check-square'></i> Checkout
+		</button>
+	</div>
+	
+	<?php echo form_close(); ?>
+
 	<script>
 		$(document).ready(function(){
 		    $('#cart').DataTable();
