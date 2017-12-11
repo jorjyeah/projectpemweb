@@ -47,8 +47,8 @@
         </div>
         <div class="modal-body">
           <?php echo form_open(base_url()."awal1"); ?>
-          Email : <?php echo form_input("email",""); ?> <br />
-          Password : <?php echo form_input("password",""); ?> <br />
+          Email : <?php echo form_input("email","", "class='form-control'"); ?> <br />
+          Password : <?php echo form_password("password","", "class='form-control'"); ?> <br />
         </div>
         <div class="modal-footer">
         <?php echo form_submit("awal", "Login", 'class="btn btn-primary"','class="fa fa-user-plus"'); ?>

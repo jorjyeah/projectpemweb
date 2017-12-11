@@ -101,29 +101,53 @@ class Home extends CI_Controller{
 	}
 
 	public function cart(){
-		$data['user'] = $this->session->userdata('username');
-		$data['orderid'] = date("ymd").random_string('numeric',4);
-		$data['email'] = $this->query->UserDetail($data['user']);
-		$this->session->set_userdata('name0', explode(' ', $_POST['pc'])[0]);
-		$this->session->set_userdata('name1', explode(' ', $_POST['mb'])[0]);
-		$this->session->set_userdata('name2', explode(' ', $_POST['rm'])[0]);
-		$this->session->set_userdata('name3', explode(' ', $_POST['gc'])[0]);
-		$this->session->set_userdata('name4', explode(' ', $_POST['ps'])[0]);
-		$this->session->set_userdata('name5', explode(' ', $_POST['ssd'])[0]);
-		$this->session->set_userdata('name6', explode(' ', $_POST['hdd'])[0]);
-		$data['js'] = $this->load->view('include/javascript.php', NULL, TRUE);
-		$data['css'] = $this->load->view('include/css.php', NULL, TRUE);
-		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
-		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
-
-		for ($i=0;$i<7;$i++){
-			$this->session->set_userdata('qty'.$i, $_POST[$i]);
-			$data['name'][$i] = $this->query->ShowName($this->session->userdata('name'.$i));
-			$data['prc'][$i] = $this->query->ShowPrice($this->session->userdata('name'.$i));
+		if($this->input->post('build') == 'build'){
+			$data['user'] = $this->session->userdata('username');
+			$data['email'] = $this->query->UserDetail($data['user']);
+			$data['id'][0] = explode(' ', $_POST['pc'])[0];
+			$data['id'][1] = explode(' ', $_POST['mb'])[0];
+			$data['id'][2] = explode(' ', $_POST['rm'])[0];
+			$data['id'][3] = explode(' ', $_POST['gc'])[0];
+			$data['id'][4] = explode(' ', $_POST['ps'])[0];
+			$data['id'][5] = explode(' ', $_POST['ssd'])[0];
+			$data['id'][6] = explode(' ', $_POST['hdd'])[0];
+			$data['js'] = $this->load->view('include/javascript.php', NULL, TRUE);
+			$data['css'] = $this->load->view('include/css.php', NULL, TRUE);
+			$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
+			$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
+	
+			for ($i=0;$i<7;$i++){
+				$data['name'][$i] = $this->query->ShowName($data['id'][$i]);
+				$data['scr'][$i] = $this->query->ShowScore($data['id'][$i]);
+			}
+				$data['prgm'] = $this->query->ShowProgram($data);
+			$this->load->view('pages/build.php', $data);
 		}
+		else{
+			$data['user'] = $this->session->userdata('username');
+			$data['orderid'] = date("ymd").random_string('numeric',4);
+			$data['email'] = $this->query->UserDetail($data['user']);
+			$this->session->set_userdata('name0', explode(' ', $_POST['pc'])[0]);
+			$this->session->set_userdata('name1', explode(' ', $_POST['mb'])[0]);
+			$this->session->set_userdata('name2', explode(' ', $_POST['rm'])[0]);
+			$this->session->set_userdata('name3', explode(' ', $_POST['gc'])[0]);
+			$this->session->set_userdata('name4', explode(' ', $_POST['ps'])[0]);
+			$this->session->set_userdata('name5', explode(' ', $_POST['ssd'])[0]);
+			$this->session->set_userdata('name6', explode(' ', $_POST['hdd'])[0]);
+			$data['js'] = $this->load->view('include/javascript.php', NULL, TRUE);
+			$data['css'] = $this->load->view('include/css.php', NULL, TRUE);
+			$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
+			$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
 
-		$this->load->view('pages/cart.php', $data);
-		//$this->query->InsertCart($data['orderid'], $data['comp'][$i], $data['qty'][$i], $data['email'], $data['user'], $data['prc'][$i], $data['prc'][$i]*$data['qty'][$i]);
+			for ($i=0;$i<7;$i++){
+				$this->session->set_userdata('qty'.$i, $_POST[$i]);
+				$data['name'][$i] = $this->query->ShowName($this->session->userdata('name'.$i));
+				$data['prc'][$i] = $this->query->ShowPrice($this->session->userdata('name'.$i));
+				$data['scr'][$i] = $this->query->ShowScore($this->session->userdata('name'.$i));
+			}
+
+			$this->load->view('pages/cart.php', $data);
+		}
 	}
 
 	public function deletecom(){
@@ -144,15 +168,6 @@ class Home extends CI_Controller{
 		$this->load->view('pages/cart.php', $data); /* gue mau redirect lagi ke halaman cart, caranya pakai routes 'process', itu nanti bakal masuk ke function process.
 		Tapi dikasih name biar bisa bedain if-ifnya yang mau mengarah ke view*/
 
-	}
-
-
-	public function build(){
-		$data['js'] = $this->load->view('include/javascript.php', NULL, TRUE);
-		$data['css'] = $this->load->view('include/css.php', NULL, TRUE);
-		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
-		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
-		$this->load->view('pages/build.php', $data);
 	}
 
 	public function usercrud(){

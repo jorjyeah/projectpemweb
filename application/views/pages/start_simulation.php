@@ -86,7 +86,7 @@
 		<?php $do++; } ?>
 		<div align='right'>
 							
-			<button type='submit' name='build' class='btn btn-warning' >
+			<button type='submit' name='build' value='build' class='btn btn-warning' >
 				<i class='fa fa-wrench'></i> Build
 			</button>
 			<?php if($this->session->userdata('username') == NULL){ ?>

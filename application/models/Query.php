@@ -29,7 +29,7 @@
 
 		public function ShowData($c_type_id){
 			$this->db->trans_begin();
-			$this->db->select('component.c_name, component.c_price, component.component_id, component_type.c_type_name');
+			$this->db->select('component.c_name, component.c_price, component.component_id, component_type.c_type_name, component.c_score');
 			$this->db->from('component');
 			$this->db->join('component_type', 'component_type.c_type_id = component.c_type_id');
 			$this->db->where('component.c_type_id', $c_type_id);
@@ -110,6 +110,24 @@
 			}
 		}
 
+		public function ShowScore($component_id){
+			$this->db->trans_begin();
+			$this->db->select('c_score');
+			$this->db->from('component');
+			$this->db->where('component_id', $component_id);
+			$data=$this->db->get();
+			$this->db->trans_complete();
+
+			if($this->db->trans_status() === FALSE)
+			{
+				$this->db->trans_rollback();
+				return FALSE;
+			}else
+			{
+				return $data->row_array()['c_score'];
+			}
+		}
+
 		public function ShowName($component_id){
 			$this->db->trans_begin();
 			$this->db->select('c_name');
@@ -125,6 +143,23 @@
 			}else
 			{
 				return $data->row_array()['c_name'];
+			}
+		}
+
+		public function ShowProgram(){
+			$this->db->trans_begin();
+			$this->db->select('p_name', 'l_score', 'm_score', 'h_score', 'vh_score');
+			$this->db->from('program');
+			$data=$this->db->get();
+			$this->db->trans_complete();
+
+			if($this->db->trans_status() === FALSE)
+			{
+				$this->db->trans_rollback();
+				return FALSE;
+			}else
+			{
+				return $data->result_array();
 			}
 		}
 
