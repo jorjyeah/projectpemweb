@@ -72,7 +72,6 @@ class Home extends CI_Controller{
 		$this->form_validation->set_rules('first_name', 'First Name', 'required|max_length[20]|min_length[2]');
 		$this->form_validation->set_rules('last_name', 'Last Name', 'required|max_length[20]|min_length[2]');
 		$this->form_validation->set_rules('password', 'Password', 'required|max_length[20]|min_length[6]');
-		$this->form_validation->set_rules('salt', 'Salt', 'required|min_length[3]');
 		$this->form_validation->set_rules('address', 'Address', 'required|min_length[4]');
 		$this->form_validation->set_rules('phone', 'Phone Number', 'required|min_length[10]|numeric');
 		
@@ -80,7 +79,7 @@ class Home extends CI_Controller{
 			$this->load->view('pages/register_user.php', $data);
 		}
 		else{
-			$this->query->InsertData($_POST['email'], $_POST['username'], $_POST['first_name'], $_POST['last_name'], $_POST['password'], $_POST['salt'], $_POST['address'], $_POST['phone']);
+			$this->query->InsertData($_POST['email'], $_POST['username'], $_POST['first_name'], $_POST['last_name'], $_POST['password'], $_POST['address'], $_POST['phone']);
 			redirect(base_url());
 		}
 	}

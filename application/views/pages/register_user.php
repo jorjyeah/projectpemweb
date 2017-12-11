@@ -19,10 +19,8 @@
           <?php echo form_error('first_name', '<p class="bg-danger">', '</p>'); ?>
           Last Name : Must be at least 2 characters<input type="text" name="last_name" value="" size="50" class="form-control"/> <br />
           <?php echo form_error('last_name', '<p class="bg-danger">', '</p>'); ?>
-          Password : Must be at least 6 characters<input type="text" name="password" value="" size="50" class="form-control"/> <br />
+          Password : Must be at least 6 characters<input type="password" name="password" value="" size="50" class="form-control"/> <br />
           <?php echo form_error('password', '<p class="bg-danger">', '</p>'); ?>
-          Salt : Must be at least 3 characters<input type="text" name="salt" value="" size="50" class="form-control"/> <br />
-          <?php echo form_error('salt', '<p class="bg-danger">', '</p>'); ?>
           Address : Must be at least 4 characters<input type="text" name="address" value="" size="50" class="form-control"/> <br />
           <?php echo form_error('address', '<p class="bg-danger">', '</p>'); ?>
           Phone : Must be at least 10 characters<input type="text" name="phone" value="" size="50" class="form-control"/> <br />

@@ -10,8 +10,9 @@
 			$this->load->database();
 		}
 
-		public function InsertData($email, $username, $first_name, $last_name, $password, $salt, $address, $phone)
+		public function InsertData($email, $username, $first_name, $last_name, $password, $address, $phone)
 		{	
+			$salt = random_string('alpha', 6);
 			$data = array(
 						'email' => $email,
 						'user_name' => $username,
