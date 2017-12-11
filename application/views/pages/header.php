@@ -13,12 +13,12 @@
           
           <?php if($this->session->userdata('username') == '1050ti' or $this->session->userdata('username') == 'admin_m'){ ?>
             <li><a href="#"><font color="black"><i class="fa fa-user-circle"></i> Welcome, <?php echo $this->session->userdata('username'); ?></font></a></li>
-            <li><a href="<?php echo site_url().'user' ?>"><font color="black"><i class="fa fa-database"></i> User Crud</font></a></li>
-            <li><a href="<?php echo site_url().'program' ?>"><font color="black"><i class="fa fa-database"></i> Program Crud</font></a></li>
-            <li><a href="<?php echo site_url().'componenttype' ?>"><font color="black"><i class="fa fa-database"></i> Component Type Crud</font></a></li>
-            <li><a href="<?php echo site_url().'component' ?>"><font color="black"><i class="fa fa-database"></i> Component Crud</font></a></li>
-            <li><a href="<?php echo site_url().'cartcrud' ?>"><font color="black"><i class="fa fa-database"></i> Cart Crud</font></a></li>
-            <li><a href="<?php echo site_url().'shipment' ?>"><font color="black"><i class="fa fa-database"></i> Shipment Crud</font></a></li>
+            <li><a href="<?php echo site_url().'home/usercrud' ?>"><font color="black"><i class="fa fa-database"></i> User Crud</font></a></li>
+            <li><a href="<?php echo site_url().'home/programcrud' ?>"><font color="black"><i class="fa fa-database"></i> Program Crud</font></a></li>
+            <li><a href="<?php echo site_url().'home/componenttypecrud' ?>"><font color="black"><i class="fa fa-database"></i> Component Type Crud</font></a></li>
+            <li><a href="<?php echo site_url().'home/componentcrud' ?>"><font color="black"><i class="fa fa-database"></i> Component Crud</font></a></li>
+            <li><a href="<?php echo site_url().'home/cartcrud' ?>"><font color="black"><i class="fa fa-database"></i> Cart Crud</font></a></li>
+            <li><a href="<?php echo site_url().'home/shipmentcrud' ?>"><font color="black"><i class="fa fa-database"></i> Shipment Crud</font></a></li>
             <li><a href="<?php echo site_url().'logout' ?>"><font color="black"><i class="fa fa-power-off"></i> Log Out</font></a></li>
           <?php } ?>
           <?php if($this->session->userdata('username') != 'admin_m'){ ?>
