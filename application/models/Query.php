@@ -59,7 +59,7 @@
 			$this->db->trans_complete();
 		}
 
-		public function InsertCart($orderid, $username, $componetid, $qty, $price, $subprice){
+		public function InsertCart($orderid, $username, $componentid, $qty, $price, $subprice){
 			$datadetail = array (
 				'order_id' => $orderid,
 				'user_name' => $username,
@@ -159,6 +159,24 @@
 			}else
 			{
 				return $data->row_array()['s_name'];
+			}
+		}
+
+		public function ShipPrice($ship_id){
+			$this->db->trans_begin();
+			$this->db->select('*');
+			$this->db->from('shipment');
+			$this->db->where('ship_id', $ship_id);
+			$data=$this->db->get();
+			$this->db->trans_complete();
+
+			if($this->db->trans_status() === FALSE)
+			{
+				$this->db->trans_rollback();
+				return FALSE;
+			}else
+			{
+				return $data->row_array()['s_price'];
 			}
 		}
 

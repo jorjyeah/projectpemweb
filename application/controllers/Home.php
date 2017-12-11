@@ -180,32 +180,36 @@ class Home extends CI_Controller{
 	public function transaction(){
 		$data['username']= $this->session->userdata('username');
 		$data['orderid']= date("ymd").random_string('numeric',4);
+		$data['date'] = strtoupper(date("Y-M-d"));
+		var_dump($data['date'] );
 		$data['email'] = $this->query->UserDetail($data['username']);
 		$data['shipid']= $_POST['shipment'];
-		//$this->session->set_userdata('shipname', $this->query->ShipName($data['shipid']));
-		var_dump($data['shipid']);
+		$data['priceship']= $this->query->ShipPrice($data['shipid']);
+		$this->session->set_userdata('shipname', $this->query->ShipName($data['shipid']));
+		//var_dump($data['shipid']);
 		// var_dump($this->session->userdata('shipname'));
 		$data['js'] = $this->load->view('include/javascript.php', NULL, TRUE);
 		$data['css'] = $this->load->view('include/css.php', NULL, TRUE);
 		$data['header'] = $this->load->view('pages/header.php', NULL, TRUE);
 		$data['footer'] = $this->load->view('pages/footer.php', NULL, TRUE);
-		// var_dump($this->session->userdata('name5'));
-		$data['total'] = 0;
+		$total = 0;
 		for ($i=0;$i<7;$i++){
-			$data['total']=$data['total'] + $this->query->ShowPrice( $this->session->userdata('name'.$i) *  $this->session->userdata('qty'.$i));
+			$total= $total + $this->query->ShowPrice( $this->session->userdata('name'.$i))*  $this->session->userdata('qty'.$i);
 		}
-		$this->query->InsertTransaction($data['orderid'],$data['shipid'],date(),$data['total']);
+		$data['total'] = $total+$data['priceship'];
+		$this->query->InsertTransaction($data['orderid'],$data['shipid'],$data['date'],$data['total']);
 
 		for ($i=0;$i<7;$i++){
 			if($this->session->userdata('qty'.$i) != 0){
 				$this->query->InsertCart($data['orderid'], $data['username'], 
-				$this->session->userdata('name'.$id), 
-				$this->session->userdata('qty'.$id), 
+				$this->session->userdata('name'.$i), 
+				$this->session->userdata('qty'.$i), 
 				$this->query->ShowPrice($this->session->userdata('name'.$i)), 
-				$this->query->ShowPrice($this->session->userdata('name'.$i)*$this->session->userdata('qty'.$id)));
+				$this->query->ShowPrice($this->session->userdata('name'.$i))*$this->session->userdata('qty'.$i));
+				$data['price'][$i] = $this->query->ShowPrice($this->session->userdata('name'.$i));
+				$data['compname'][$i] = $this->query->ShowName($this->session->userdata('name'.$i));
 			}
 		}
-		redirect(base_url());
 		$this->load->view('pages/transaction.php',$data);
 	}
 
