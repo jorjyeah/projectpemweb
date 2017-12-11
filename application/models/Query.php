@@ -164,7 +164,7 @@
 
 		public function ShowProgram(){
 			$this->db->trans_begin();
-			$this->db->select('p_name', 'l_score', 'm_score', 'h_score', 'vh_score');
+			$this->db->select('*');
 			$this->db->from('program');
 			$data=$this->db->get();
 			$this->db->trans_complete();

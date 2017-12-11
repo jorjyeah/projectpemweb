@@ -102,6 +102,14 @@ class Home extends CI_Controller{
 		$this->load->view('pages/start_simulation.php', $data);
 	}
 
+	public function program(){
+		// for($i=0;$i<7;$i++){
+		// 	$data['program'][$i] = $this->query->ShowPogram();
+		// }
+		$data['program'] = $this->query->ShowPogram();
+		var_dump($data['program']);
+;	}
+
 	public function cart(){
 		if($this->input->post('build') == 'build'){
 			// $data['user'] = $this->session->userdata('username');
@@ -122,7 +130,10 @@ class Home extends CI_Controller{
 				$data['name'][$i] = $this->query->ShowName($data['id'][$i]);
 				$data['scr'][$i] = $this->query->ShowScore($data['id'][$i]);
 			}
-				$data['prgm'] = $this->query->ShowProgram($data);
+			
+
+			$data['program'] = $this->query->ShowProgram();
+
 			$this->load->view('pages/build.php', $data);
 		}
 		else{
@@ -146,7 +157,7 @@ class Home extends CI_Controller{
 				$data['prc'][$i] = $this->query->ShowPrice($this->session->userdata('name'.$i));
 				$data['scr'][$i] = $this->query->ShowScore($this->session->userdata('name'.$i));
 			}
-
+			
 			$this->load->view('pages/cart.php', $data);
 		}
 	}
