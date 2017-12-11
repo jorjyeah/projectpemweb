@@ -181,7 +181,7 @@ class Home extends CI_Controller{
 		$data['username']= $this->session->userdata('username');
 		$data['orderid']= date("ymd").random_string('numeric',4);
 		$data['date'] = strtoupper(date("Y-M-d"));
-		var_dump($data['date'] );
+		// var_dump($data['date'] );
 		$data['email'] = $this->query->UserDetail($data['username']);
 		$data['shipid']= $_POST['shipment'];
 		$data['priceship']= $this->query->ShipPrice($data['shipid']);

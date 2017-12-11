@@ -54,6 +54,7 @@
 				't_date' => $date,
 				'total_price' => $total
 			);
+			// var_dump($datakey['t_date']);
 			$this->db->trans_begin();
 			$this->db->insert('transaction',$datakey);
 			$this->db->trans_complete();
