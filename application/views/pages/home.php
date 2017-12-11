@@ -11,15 +11,18 @@
 	?>
 	<title>Computer Simulation</title>
 </head>
-<body>
+<body style="background-image: url('http://projectpemweb.dev/assets/image/background-home.jpeg')" align="center" width="20%" heigth="20%">
 	<?php
 		echo $header;
 		echo $footer;
 	?>
-
-	<a href="<?php echo site_url().'simulation' ?>" class="btn btn-primary">
-    	Start Simulation
-    </a>
-
+	<div class="container" align="center">
+	
+		<a href="<?php echo site_url().'simulation' ?>" class="btn btn-warning">
+			Start Simulation
+		</a>
+	</div>
+<style>
+</style>
 </body>
 </html>
